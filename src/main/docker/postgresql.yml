@@ -1,0 +1,12 @@
+version: '2'
+services:
+    pazaassetbddsrv-postgresql:
+        container_name: pazaassetbddsrv-postgresql
+        image: postgres:9.5.4
+        # volumes:
+        #     - ~/volumes/jhipster/pazaassetbddsrv/postgresql/:/var/lib/postgresql/
+        environment:
+            - POSTGRES_USER=pazaassetbddsrv
+            - POSTGRES_PASSWORD=
+        ports:
+            - 5432:5432
