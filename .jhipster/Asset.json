@@ -1,0 +1,27 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "AssetStatus",
+            "fieldValues": "DESTROYED,OWNED,AVAILABLE,RESERVED,OWNERSHIP_TRADING",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20161114143651",
+    "entityTableName": "asset",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "microserviceName": "pazaassetbddsrv"
+}
