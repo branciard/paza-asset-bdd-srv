@@ -1,6 +1,6 @@
 {
   "generator-jhipster": {
-    "jhipsterVersion": "3.10.0",
+    "jhipsterVersion": "3.11.0",
     "baseName": "pazaassetbddsrv",
     "packageName": "com.branciard.paza.pazaassetbddsrv",
     "packageFolder": "com/branciard/paza/pazaassetbddsrv",

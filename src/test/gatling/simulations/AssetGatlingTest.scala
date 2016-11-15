@@ -1,3 +1,6 @@
+import java.nio.charset.StandardCharsets
+import java.util.Base64
+
 import _root_.io.gatling.core.scenario.Simulation
 import ch.qos.logback.classic.{Level, LoggerContext}
 import io.gatling.core.Predef._
@@ -32,6 +35,19 @@ class AssetGatlingTest extends Simulation {
         "Accept" -> """application/json"""
     )
 
+    val authorization_header = "Basic " + Base64.getEncoder.encodeToString("pazaassetbddsrvapp:my-secret-token-to-change-in-production".getBytes(StandardCharsets.UTF_8))
+
+    val headers_http_authentication = Map(
+        "Content-Type" -> """application/x-www-form-urlencoded""",
+        "Accept" -> """application/json""",
+        "Authorization"-> authorization_header
+    )
+
+    val headers_http_authenticated = Map(
+        "Accept" -> """application/json""",
+        "Authorization" -> "Bearer ${access_token}"
+    )
+
     val scn = scenario("Test the Asset entity")
         .exec(http("First unauthenticated request")
         .get("/api/account")
@@ -39,6 +55,16 @@ class AssetGatlingTest extends Simulation {
         .check(status.is(401))).exitHereIfFailed
         .pause(10)
         .exec(http("Authentication")
+        .post("/oauth/token")
+        .headers(headers_http_authentication)
+        .formParam("username", "admin")
+        .formParam("password", "admin")
+        .formParam("grant_type", "password")
+        .formParam("scope", "read write")
+        .formParam("client_secret", "my-secret-token-to-change-in-production")
+        .formParam("client_id", "pazaassetbddsrvapp")
+        .formParam("submit", "Login")
+        .check(jsonPath("$.access_token").saveAs("access_token"))).exitHereIfFailed
         .pause(1)
         .exec(http("Authenticated request")
         .get("/api/account")
